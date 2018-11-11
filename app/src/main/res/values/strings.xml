@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">ControlMone</string>
+    <string name="app_name">Control Money</string>
+
+    <string name="add_item_screen_title">Новая запись</string>
+    <string name="main_screen_title">Учёт бюджета</string>
+    
 </resources>
