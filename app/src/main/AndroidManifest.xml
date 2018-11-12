@@ -10,18 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.omelchenkoaleks.controlmoney.MainActivity"></activity>
-
-        <activity android:name="com.omelchenkoaleks.controlmoney.AddItemActivity"></activity>
-
-        <activity android:name=".ItemsActivity"
-            android:title="@string/main_screen_title">
+        <activity android:name="com.omelchenkoaleks.controlmoney.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name="com.omelchenkoaleks.controlmoney.AddItemActivity"
+            android:label="@string/add_item_screen_title"></activity>
 
     </application>
 
