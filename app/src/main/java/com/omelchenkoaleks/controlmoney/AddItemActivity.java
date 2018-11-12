@@ -9,7 +9,6 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.omelchenkoaleks.controlmone.R;
 
 public class AddItemActivity extends AppCompatActivity {
 
@@ -17,7 +16,7 @@ public class AddItemActivity extends AppCompatActivity {
 
     private EditText name;
     private EditText price;
-    private Button addBatton;
+    private Button addButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +27,7 @@ public class AddItemActivity extends AppCompatActivity {
 
         name = findViewById(R.id.name);
         price = findViewById(R.id.price);
-        addBatton = findViewById(R.id.add_btn);
+        addButton = findViewById(R.id.add_btn);
 
         name.addTextChangedListener(new TextWatcher() {
             @Override
@@ -44,7 +43,7 @@ public class AddItemActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 // Если у нас строка пустая, то кнопка неактивна, и наоборот.
-                addBatton.setEnabled(!TextUtils.isEmpty(s));
+                addButton.setEnabled(!TextUtils.isEmpty(s));
                 Log.i(TAG, "afterTextChanged: " + s);
             }
         });

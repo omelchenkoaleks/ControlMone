@@ -7,6 +7,9 @@
     <!--hint-->
     <string name="hint_editText_title">Название</string>
     <string name="hint_editText_quantity">0₴</string>
+
+    <!---->
+    <string name="currency_ua">₴</string>
     
     
 </resources>

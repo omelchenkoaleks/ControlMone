@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.omelchenkoaleks.controlmone">
+    package="com.omelchenkoaleks.controlmoney">
 
     <application
         android:allowBackup="true"
@@ -12,7 +12,10 @@
 
         <activity android:name="com.omelchenkoaleks.controlmoney.MainActivity"></activity>
 
-        <activity android:name="com.omelchenkoaleks.controlmoney.AddItemActivity">
+        <activity android:name="com.omelchenkoaleks.controlmoney.AddItemActivity"></activity>
+
+        <activity android:name=".ItemListActivity"
+            android:title="@string/main_screen_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
