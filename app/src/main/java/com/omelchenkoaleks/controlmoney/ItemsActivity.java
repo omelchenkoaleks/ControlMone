@@ -7,17 +7,17 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 
-public class ItemListActivity extends AppCompatActivity {
+public class ItemsActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private ItemAdapter adapter;
+    private ItemsAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_items_list);
 
-        adapter = new ItemAdapter();
+        adapter = new ItemsAdapter();
 
         recyclerView = findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

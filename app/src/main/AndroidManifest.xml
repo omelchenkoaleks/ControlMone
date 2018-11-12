@@ -14,7 +14,7 @@
 
         <activity android:name="com.omelchenkoaleks.controlmoney.AddItemActivity"></activity>
 
-        <activity android:name=".ItemListActivity"
+        <activity android:name=".ItemsActivity"
             android:title="@string/main_screen_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

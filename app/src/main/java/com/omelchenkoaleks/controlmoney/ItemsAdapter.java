@@ -10,11 +10,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
+public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHolder> {
 
-    private List<Record> data = new ArrayList<>();
+    private List<Item> data = new ArrayList<>();
 
-    public ItemAdapter() {
+    public ItemsAdapter() {
         // Пока здесь будем создавать данные...
         createData();
     }
@@ -29,34 +29,31 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        Record record = data.get(position);
-        holder.applyData(record);
+        Item item = data.get(position);
+        holder.applyData(item);
     }
 
-    /**
-     * ViewHolder не выносим в отдельный класс, потому что у нас только один item.
-     */
     @Override
     public int getItemCount() {
         return data.size();
     }
 
     private void createData() {
-        data.add(new Record("Молоко", 10));
-        data.add(new Record("Хлеб", 10));
-        data.add(new Record("Первый ужин за свою зарплату", 500));
-        data.add(new Record("путешествие", 20000));
-        data.add(new Record("фильм посмотрел", 100));
-        data.add(new Record("врачу", 200));
-        data.add(new Record("дорога в месяц", 2000));
-        data.add(new Record("дорога", 200));
-        data.add(new Record("отдых", 2035));
-        data.add(new Record("помощь другу", 2000));
-        data.add(new Record("игры", 20));
-        data.add(new Record("покупка компьютера", 200000));
-        data.add(new Record("дорога к родителям", 3000));
-        data.add(new Record("отпуск", 300));
-        data.add(new Record("гитара", 6000));
+        data.add(new Item("Молоко", 10));
+        data.add(new Item("Хлеб", 10));
+        data.add(new Item("Первый ужин за свою зарплату", 500));
+        data.add(new Item("путешествие", 20000));
+        data.add(new Item("фильм посмотрел", 100));
+        data.add(new Item("врачу", 200));
+        data.add(new Item("дорога в месяц", 2000));
+        data.add(new Item("дорога", 200));
+        data.add(new Item("отдых", 2035));
+        data.add(new Item("помощь другу", 2000));
+        data.add(new Item("игры", 20));
+        data.add(new Item("покупка компьютера", 200000));
+        data.add(new Item("дорога к родителям", 3000));
+        data.add(new Item("отпуск", 300));
+        data.add(new Item("гитара", 6000));
     }
 
     // Создаем static, чтобы он не неследовал как внутренний класс ссылку на
@@ -72,9 +69,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             price = itemView.findViewById(R.id.price);
         }
 
-        public void applyData(Record record) {
-            title.setText(record.getTitle());
-            price.setText(String.valueOf(record.getPrice()));
+        public void applyData(Item item) {
+            title.setText(item.getTitle());
+            price.setText(String.valueOf(item.getPrice()));
         }
     }
 }
