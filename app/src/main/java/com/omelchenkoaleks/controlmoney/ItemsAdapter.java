@@ -23,7 +23,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_record, parent, false);
+                .inflate(R.layout.item, parent, false);
         return new ItemViewHolder(view);
     }
 

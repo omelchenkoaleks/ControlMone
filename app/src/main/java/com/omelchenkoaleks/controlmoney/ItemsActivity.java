@@ -15,7 +15,7 @@ public class ItemsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_items_list);
+        setContentView(R.layout.activity_items);
 
         adapter = new ItemsAdapter();
 
