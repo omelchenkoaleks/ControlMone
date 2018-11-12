@@ -4,4 +4,9 @@
     <string name="add_item_screen_title">Новая запись</string>
     <string name="main_screen_title">Учёт бюджета</string>
     
+    <!--hint-->
+    <string name="hint_editText_title">Название</string>
+    <string name="hint_editText_quantity">0₴</string>
+    
+    
 </resources>
