@@ -10,12 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class ItemsFragment extends Fragment {
-
-    private static final int TYPE_UNKNOWN = -1;
-    public static final int TYPE_INCOMES = 1;
-    public static final int TYPE_EXPENSES = 2;
 
     private static final String TYPE_KEY = "type";
 
@@ -24,11 +23,11 @@ public class ItemsFragment extends Fragment {
     private RecyclerView recyclerView;
     private ItemsAdapter adapter;
 
-    public static ItemsFragment createItemsFragment(int type) {
+    public static ItemsFragment createItemsFragment(String type) {
         ItemsFragment fragment = new ItemsFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putInt(ItemsFragment.TYPE_KEY, ItemsFragment.TYPE_INCOMES);
+        bundle.putString(ItemsFragment.TYPE_KEY, type);
 
         fragment.setArguments(bundle);
         return fragment;
@@ -40,9 +39,9 @@ public class ItemsFragment extends Fragment {
         adapter = new ItemsAdapter();
 
         Bundle bundle = getArguments();
-        type = bundle.getInt(TYPE_KEY, TYPE_UNKNOWN);
+        type = bundle.getString(TYPE_KEY, Item.TYPE_EXPENSES);
 
-        if (type == TYPE_UNKNOWN) {
+        if (type.equals(Item.TYPE_UNKNOWN)) {
             throw new IllegalArgumentException("Unknown type");
         }
     }
@@ -62,5 +61,21 @@ public class ItemsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
+
+        loadItems();
     }
+
+    // В этом методе должны загрузиться данные и отобразиться в адаптере.
+    private void loadItems() {
+
+        List<Item> items = new ArrayList<>();
+        // Временно, как-будто мы получили данные извне.
+        items.add(new Item("Молоко", 10));
+        items.add(new Item("Хлеб", 10));
+        items.add(new Item("Первый ужин за свою зарплату", 500));
+        // Передаем их в адаптер.
+        adapter.setData(items);
+    }
+
+
 }
