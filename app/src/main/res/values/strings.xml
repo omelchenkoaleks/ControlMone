@@ -10,6 +10,11 @@
 
     <!---->
     <string name="currency_ua">₴</string>
+
+    <!--TabLayout-->
+    <string name="tab_incomes">Доходы</string>
+    <string name="tab_expenses">Расходы</string>
+    <string name="tab_balance">Баланс</string>
     
     
 </resources>

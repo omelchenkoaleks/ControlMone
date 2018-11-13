@@ -16,9 +16,8 @@ public class MainPagesAdapter extends FragmentPagerAdapter {
             return new ItemsFragment();
         } else if (position == 1) {
             return new ItemsFragment();
-        } else {
-            return null;
         }
+        return null;
     }
 
     @Override
