@@ -10,18 +10,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
+
+import retrofit2.Call;
 
 
 public class ItemsFragment extends Fragment {
 
+    private static final String TAG = "ItemsFragment";
+
     private static final String TYPE_KEY = "type";
 
-    private int type;
+    private String type;
 
     private RecyclerView recyclerView;
     private ItemsAdapter adapter;
+
+    private Api api;
+    private App app;
 
     public static ItemsFragment createItemsFragment(String type) {
         ItemsFragment fragment = new ItemsFragment();
@@ -44,6 +51,9 @@ public class ItemsFragment extends Fragment {
         if (type.equals(Item.TYPE_UNKNOWN)) {
             throw new IllegalArgumentException("Unknown type");
         }
+
+        app = ((App) getActivity().getApplication());
+        api = app.getApi();
     }
 
     @Nullable
@@ -65,17 +75,22 @@ public class ItemsFragment extends Fragment {
         loadItems();
     }
 
-    // В этом методе должны загрузиться данные и отобразиться в адаптере.
     private void loadItems() {
 
-        List<Item> items = new ArrayList<>();
-        // Временно, как-будто мы получили данные извне.
-        items.add(new Item("Молоко", 10));
-        items.add(new Item("Хлеб", 10));
-        items.add(new Item("Первый ужин за свою зарплату", 500));
-        // Передаем их в адаптер.
-        adapter.setData(items);
+        Thread thread = new Thread(new LoadItemsTask());
+        thread.start();
+
     }
 
-
+    private class LoadItemsTask implements Runnable {
+        @Override
+        public void run() {
+            Call<List<Item>> call = api.getItems(type);
+            try {
+                List<Item> items = call.execute().body();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
