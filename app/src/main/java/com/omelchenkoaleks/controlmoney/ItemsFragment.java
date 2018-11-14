@@ -1,22 +1,20 @@
 package com.omelchenkoaleks.controlmoney;
 
-import android.annotation.SuppressLint;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ItemsFragment extends Fragment {
@@ -78,49 +76,70 @@ public class ItemsFragment extends Fragment {
         loadItems();
     }
 
-    @SuppressLint("StaticFieldLeak")
     private void loadItems() {
+        Call<List<Item>> call = api.getItems(type);
 
-        AsyncTask<Void, Void, List<Item>> task = new AsyncTask<Void, Void, List<Item>>() {
+        call.enqueue(new Callback<List<Item>>() {
 
-            // Метод выполнится в главном потоке. В нем можно что-то сделать до выполнения
-            // нашей основной задачи - например показать прогресс бар до загрузки.
+            // Сюда придет ответ.
             @Override
-            protected void onPreExecute() {
-                Log.d(TAG, "onPreExecute: thread name " + Thread.currentThread().getName());
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+                adapter.setData(response.body());
             }
 
-            // Метод будет выполнен в другом потоке, который будет создан для непосредственной
-            // нашей задачи...
+            // Если произойдет ошибка.
             @Override
-            protected List<Item> doInBackground(Void... voids) {
-                Log.d(TAG, "doInBackground: thread name " + Thread.currentThread().getName());
+            public void onFailure(Call<List<Item>> call, Throwable t) {
 
-                Call<List<Item>> call = api.getItems(type);
-                try {
-                    List<Item> items = call.execute().body();
-                    // Если пришли то возвращаем...
-                    return items;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                // Если не пришли...
-                return null;
             }
-
-            // В этом методе данные вернутся в главный поток.
-            @Override
-            protected void onPostExecute(List<Item> items) {
-                // Но, конечно, нужно проверить, что они не равны null.
-                if (items != null) {
-                    adapter.setData(items);
-                }
-            }
-        };
-
-        // После создания его нужно запустить.
-        task.execute();
+        });
     }
+
+
+    // AsyncTask. 2 версия получения данных из сети.
+//    @SuppressLint("StaticFieldLeak")
+//    private void loadItems() {
+//
+//        AsyncTask<Void, Void, List<Item>> task = new AsyncTask<Void, Void, List<Item>>() {
+//
+//            // Метод выполнится в главном потоке. В нем можно что-то сделать до выполнения
+//            // нашей основной задачи - например показать прогресс бар до загрузки.
+//            @Override
+//            protected void onPreExecute() {
+//                Log.d(TAG, "onPreExecute: thread name " + Thread.currentThread().getName());
+//            }
+//
+//            // Метод будет выполнен в другом потоке, который будет создан для непосредственной
+//            // нашей задачи...
+//            @Override
+//            protected List<Item> doInBackground(Void... voids) {
+//                Log.d(TAG, "doInBackground: thread name " + Thread.currentThread().getName());
+//
+//                Call<List<Item>> call = api.getItems(type);
+//                try {
+//                    List<Item> items = call.execute().body();
+//                    // Если пришли то возвращаем...
+//                    return items;
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                // Если не пришли...
+//                return null;
+//            }
+//
+//            // В этом методе данные вернутся в главный поток.
+//            @Override
+//            protected void onPostExecute(List<Item> items) {
+//                // Но, конечно, нужно проверить, что они не равны null.
+//                if (items != null) {
+//                    adapter.setData(items);
+//                }
+//            }
+//        };
+//
+//        // После создания его нужно запустить.
+//        task.execute();
+//    }
 
 
     // Thread and Handler. 1 Версия получения данных из сети.
