@@ -30,19 +30,16 @@ public class App extends Application {
                 .addInterceptor(interceptor)
                 .build();
 
-        // Можно задать настройки как парсить полученный ответ от сервера.
-        // JSON в этом месте настраивается.
         Gson gson = new GsonBuilder()
                 .setDateFormat("dd.MM.yyyy HH:mm:ss")
                 .create();
 
-        // Настроили Ретрофит.
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://loftschoolandroid.getsandbox.com/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
-        // Ссылка на наш интерфейс. А ретрофит создаст нашу реализацию нашего интерфейса.
+
         api = retrofit.create(Api.class);
     }
 

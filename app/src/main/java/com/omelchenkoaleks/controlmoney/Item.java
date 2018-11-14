@@ -7,13 +7,13 @@ public class Item {
     public static final String TYPE_EXPENSES = "expenses";
 
     public int id;
-    public String title;
+    public String name;
     public String price;
     public String type;
 
-    public Item(int id, String title, String price, String type) {
+    public Item(int id, String name, String price, String type) {
         this.id = id;
-        this.title = title;
+        this.name = name;
         this.price = price;
         this.type = type;
     }
