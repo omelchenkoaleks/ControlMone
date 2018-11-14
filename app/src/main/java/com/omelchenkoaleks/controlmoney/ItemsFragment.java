@@ -1,5 +1,7 @@
 package com.omelchenkoaleks.controlmoney;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -81,7 +83,14 @@ public class ItemsFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "onClick: ");
+                // Явный интент.
+                Intent intent = new Intent(getContext(), AddItemActivity.class);
+                startActivity(intent);
+                // Неявный интент. ПРИМЕР:
+//                Intent intent = new Intent();
+//                intent.setAction(Intent.ACTION_VIEW);
+//                intent.setData(Uri.parse("https://pikabu.ru"));
+//                startActivity(intent);
             }
         });
 
