@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.omelchenkoaleks.controlmoney.MainActivity">
+        <activity android:name="com.omelchenkoaleks.controlmoney.MainActivity"
+            android:label="@string/main_screen_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
