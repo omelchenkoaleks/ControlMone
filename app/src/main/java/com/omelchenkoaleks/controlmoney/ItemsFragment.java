@@ -35,7 +35,7 @@ public class ItemsFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ItemsAdapter adapter;
-    private FloatingActionButton fab;
+//    private FloatingActionButton fab;
     private SwipeRefreshLayout refresh;
 
     private Api api;
@@ -83,17 +83,17 @@ public class ItemsFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
-        fab = view.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getContext(), AddItemActivity.class);
-                intent.putExtra(AddItemActivity.TYPE_KEY, type);
-                startActivityForResult(intent, ADD_ITEM_REQUEST_CODE);
-
-            }
-        });
+//        fab = view.findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                Intent intent = new Intent(getContext(), AddItemActivity.class);
+//                intent.putExtra(AddItemActivity.TYPE_KEY, type);
+//                startActivityForResult(intent, ADD_ITEM_REQUEST_CODE);
+//
+//            }
+//        });
 
         refresh = view.findViewById(R.id.refresh);
         refresh.setColorSchemeColors(Color.BLUE, Color.CYAN, Color.GREEN);
