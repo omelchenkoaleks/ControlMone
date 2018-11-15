@@ -131,9 +131,9 @@ public class ItemsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == ADD_ITEM_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            String name = data.getStringExtra("name");
-            String price = data.getStringExtra("price");
-            Log.i(TAG, "onActivityResult: name = " + name + " price = " + price );
+            Item item = (Item) data.getSerializableExtra("item");
+
+            Log.i(TAG, "onActivityResult: name = " + item.name + " price = " + item.price );
         }
 
         super.onActivityResult(requestCode, resultCode, data);

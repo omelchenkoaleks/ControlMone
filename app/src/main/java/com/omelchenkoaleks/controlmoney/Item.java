@@ -1,6 +1,8 @@
 package com.omelchenkoaleks.controlmoney;
 
-public class Item {
+import java.io.Serializable;
+
+public class Item implements Serializable {
 
     public static final String TYPE_UNKNOWN = "unknown";
     public static final String TYPE_INCOMES = "incomes";
@@ -13,6 +15,12 @@ public class Item {
 
     public Item(int id, String name, String price, String type) {
         this.id = id;
+        this.name = name;
+        this.price = price;
+        this.type = type;
+    }
+
+    public Item(String name, String price, String type) {
         this.name = name;
         this.price = price;
         this.type = type;

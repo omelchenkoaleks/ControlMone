@@ -66,10 +66,11 @@ public class AddItemActivity extends AppCompatActivity {
                 String nameValue = name.getText().toString();
                 String priceValue = price.getText().toString();
 
+                Item item = new Item(nameValue, priceValue, type);
+
                 // Теперь нужен интент, чтобы получить данные...
                 Intent intent = new Intent();
-                intent.putExtra("name", nameValue);
-                intent.putExtra("price", priceValue);
+                intent.putExtra("item", item);
 
                 setResult(RESULT_OK, intent);
                 // Важно, чтобы кнопка сработала, нужно покинуть этот экран.
