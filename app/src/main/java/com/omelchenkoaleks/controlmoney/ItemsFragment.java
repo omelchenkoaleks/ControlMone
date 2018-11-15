@@ -1,16 +1,15 @@
 package com.omelchenkoaleks.controlmoney;
 
 import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DialogTitle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +32,7 @@ public class ItemsFragment extends Fragment {
     private RecyclerView recyclerView;
     private ItemsAdapter adapter;
     private FloatingActionButton fab;
+    private SwipeRefreshLayout refresh;
 
     private Api api;
     private App app;
@@ -85,12 +85,22 @@ public class ItemsFragment extends Fragment {
             public void onClick(View v) {
                 // Явный интент.
                 Intent intent = new Intent(getContext(), AddItemActivity.class);
+                intent.putExtra(AddItemActivity.TYPE_KEY, type);
                 startActivity(intent);
                 // Неявный интент. ПРИМЕР:
 //                Intent intent = new Intent();
 //                intent.setAction(Intent.ACTION_VIEW);
 //                intent.setData(Uri.parse("https://pikabu.ru"));
 //                startActivity(intent);
+            }
+        });
+
+        refresh = view.findViewById(R.id.refresh);
+        refresh.setColorSchemeColors(Color.BLUE, Color.CYAN, Color.GREEN);
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadItems();
             }
         });
 
@@ -106,12 +116,13 @@ public class ItemsFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
                 adapter.setData(response.body());
+                refresh.setRefreshing(false);
             }
 
             // Если произойдет ошибка.
             @Override
             public void onFailure(Call<List<Item>> call, Throwable t) {
-
+                refresh.setRefreshing(false);
             }
         });
     }
