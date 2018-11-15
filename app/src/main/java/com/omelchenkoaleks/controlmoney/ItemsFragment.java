@@ -33,7 +33,7 @@ public class ItemsFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ItemsAdapter adapter;
-//    private FloatingActionButton fab;
+    //    private FloatingActionButton fab;
     private SwipeRefreshLayout refresh;
 
     private Api api;
@@ -118,8 +118,12 @@ public class ItemsFragment extends Fragment {
 
         if (requestCode == ADD_ITEM_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Item item = data.getParcelableExtra("item");
-            adapter.addItem(item);
+
+            // Когда получили item по типу проверяем - наш ли это item.
+            if (item.type.equals(type)) {
+                adapter.addItem(item);
             }
+        }
 
         super.onActivityResult(requestCode, resultCode, data);
     }

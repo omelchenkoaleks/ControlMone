@@ -1,8 +1,10 @@
 package com.omelchenkoaleks.controlmoney;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,8 +41,18 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
             @Override
             public void onClick(View v) {
 
+                // При нажатии на кнопку - здесь получаем текущую страницу.
+                int currentPage = viewPager.getCurrentItem();
+
+                String type = null;
+                if (currentPage == MainPagesAdapter.PAGE_INCOMES) {
+                    type = Item.TYPE_INCOMES;
+                } else if (currentPage == MainPagesAdapter.PAGE_EXPENSES) {
+                    type = Item.TYPE_EXPENSES;
+                }
+
                 Intent intent = new Intent(MainActivity.this, AddItemActivity.class);
-                intent.putExtra(AddItemActivity.TYPE_KEY, "expense");
+                intent.putExtra(AddItemActivity.TYPE_KEY, type);
                 startActivityForResult(intent, ItemsFragment.ADD_ITEM_REQUEST_CODE);
 
             }
@@ -67,7 +79,26 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     // Изменилось состояние страницы.
     @Override
-    public void onPageScrollStateChanged(int i) {
+    public void onPageScrollStateChanged(int state) {
+        switch (state) {
+            case ViewPager.SCROLL_STATE_IDLE:
+                fab.setEnabled(true);
+                break;
+            case ViewPager.SCROLL_STATE_DRAGGING:
+            case ViewPager.SCROLL_STATE_SETTLING:
+                fab.setEnabled(false);
+                break;
+        }
+    }
 
+    // Если из активити вызывается onActivityResult, то назад данные не вернуться,
+    // если в самом активити не определить этот метод...
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }
