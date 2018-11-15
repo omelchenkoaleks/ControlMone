@@ -132,9 +132,8 @@ public class ItemsFragment extends Fragment {
 
         if (requestCode == ADD_ITEM_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Item item = (Item) data.getSerializableExtra("item");
-
-            Log.i(TAG, "onActivityResult: name = " + item.name + " price = " + item.price );
-        }
+            adapter.addItem(item);
+            }
 
         super.onActivityResult(requestCode, resultCode, data);
     }
