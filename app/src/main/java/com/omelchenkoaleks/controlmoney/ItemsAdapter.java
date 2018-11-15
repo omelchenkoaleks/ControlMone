@@ -20,8 +20,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
     }
 
     public void addItem(Item item) {
-        data.add(item);
-        notifyItemInserted(data.size());
+        // Запись в начало списка.
+        data.add(0, item);
+        notifyItemInserted(0);
     }
 
     @NonNull
