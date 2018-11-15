@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
     private ViewPager viewPager;
     private TabLayout tabLayout;
@@ -26,9 +26,12 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
+
         MainPagesAdapter pagesAdapter =
                 new MainPagesAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(pagesAdapter);
+        viewPager.addOnPageChangeListener(this);
+
         tabLayout.setupWithViewPager(viewPager);
 
         fab = findViewById(R.id.fab);
@@ -42,5 +45,29 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onPageScrolled(int i, float v, int i1) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        switch (position) {
+            case MainPagesAdapter.PAGE_INCOMES:
+            case MainPagesAdapter.PAGE_EXPENSES:
+                fab.show();
+                break;
+            case MainPagesAdapter.PAGE_BALANCE:
+                fab.hide();
+                break;
+        }
+    }
+
+    // Изменилось состояние страницы.
+    @Override
+    public void onPageScrollStateChanged(int i) {
+
     }
 }
