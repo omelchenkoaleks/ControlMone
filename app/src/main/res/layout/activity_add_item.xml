@@ -56,8 +56,7 @@
                 android:layout_width="26dp"
                 android:layout_height="26dp"
                 android:layout_marginLeft="22dp"
-                android:background="@drawable/ic_add"
-                android:enabled="false" />
+                android:background="@drawable/ic_add" />
 
         </LinearLayout>
 
