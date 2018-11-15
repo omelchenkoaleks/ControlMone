@@ -1,5 +1,6 @@
 package com.omelchenkoaleks.controlmoney;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,5 +125,17 @@ public class ItemsFragment extends Fragment {
                 refresh.setRefreshing(false);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == ADD_ITEM_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            String name = data.getStringExtra("name");
+            String price = data.getStringExtra("price");
+            Log.i(TAG, "onActivityResult: name = " + name + " price = " + price );
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
