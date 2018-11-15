@@ -131,7 +131,7 @@ public class ItemsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == ADD_ITEM_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            Item item = (Item) data.getSerializableExtra("item");
+            Item item = data.getParcelableExtra("item");
             adapter.addItem(item);
             }
 
