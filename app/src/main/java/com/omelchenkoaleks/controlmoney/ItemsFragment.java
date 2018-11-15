@@ -8,10 +8,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -136,13 +140,61 @@ public class ItemsFragment extends Fragment {
 
         @Override
         public void onItemClick(Item item, int position) {
-            Log.i(TAG, "onItemClick: name = " + item.name + " position = " + position);
+            // Выделяем цвет при нажатии.
+            if (isInActionMode()) {
+                toggleSelection(position);
+            }
+
+            actionMode = ((AppCompatActivity) getActivity())
+                    .startSupportActionMode(actionModeCallback);
+            toggleSelection(position);
         }
 
         @Override
         public void onItemLongClick(Item item, int position) {
-            Log.i(TAG, "onItemClick: name = " + item.name + " position = " + position);
+            // Предотвращаем от повторного нажимания.
+            if (isInActionMode()) {
+                return;
+            }
+        }
+
+        // Проверяем, что не пустой.
+        private boolean isInActionMode() {
+            return actionMode != null;
+        }
+
+        // Переключаем, что у нас item выбран.
+        private void toggleSelection(int position) {
+//            adapter.toggleSelection(position);
         }
     }
+
+
+    /*     ACTION MODE     */
+
+    private ActionMode actionMode = null;
+
+    private ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            actionMode = mode;
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+            return false;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode actionMode) {
+            actionMode = null;
+        }
+    };
 }
 
