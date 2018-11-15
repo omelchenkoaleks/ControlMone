@@ -22,7 +22,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class ItemsFragment extends Fragment implements ItemsAdapterListener{
+public class ItemsFragment extends Fragment {
 
     private static final String TAG = "ItemsFragment";
 
@@ -54,7 +54,7 @@ public class ItemsFragment extends Fragment implements ItemsAdapterListener{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         adapter = new ItemsAdapter();
-        adapter.setListener(this);
+        adapter.setListener(new AdapterListener());
 
         Bundle bundle = getArguments();
         type = bundle.getString(TYPE_KEY, Item.TYPE_EXPENSES);
@@ -130,13 +130,19 @@ public class ItemsFragment extends Fragment implements ItemsAdapterListener{
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public void onItemClick(Item item, int position) {
-        Log.i(TAG, "onItemClick: name = " + item.name + " position = " + position);
-    }
+    // Так как это вложенный класс - он наследует все поля и методы внешнего класса.
+    // Зачем он нам нужен? Чтобы не ссылаться на самого себя this - потом можно запутаться.
+    private class AdapterListener implements ItemsAdapterListener {
 
-    @Override
-    public void onItemLongClick(Item item, int position) {
-        Log.i(TAG, "onItemClick: name = " + item.name + " position = " + position);
+        @Override
+        public void onItemClick(Item item, int position) {
+            Log.i(TAG, "onItemClick: name = " + item.name + " position = " + position);
+        }
+
+        @Override
+        public void onItemLongClick(Item item, int position) {
+            Log.i(TAG, "onItemClick: name = " + item.name + " position = " + position);
+        }
     }
 }
+
