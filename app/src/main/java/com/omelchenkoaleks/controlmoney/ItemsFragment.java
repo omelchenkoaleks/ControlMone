@@ -186,6 +186,7 @@ public class ItemsFragment extends Fragment {
         for (int i = adapter.getSelectedItems().size() - 1; i >= 0; i-- ) {
             adapter.remove(adapter.getSelectedItems().get(i));
         }
+        actionMode.finish();
 
     }
 
