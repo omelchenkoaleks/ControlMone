@@ -40,7 +40,6 @@ public class ItemsFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ItemsAdapter adapter;
-//    private FloatingActionButton fab;
     private SwipeRefreshLayout refresh;
 
     private Api api;
@@ -181,6 +180,15 @@ public class ItemsFragment extends Fragment {
 
     private ActionMode actionMode = null;
 
+    //
+    private void removeSelectedItems() {
+        // Начинаем удаление выбранных элементов с конца - почему?
+        for (int i = adapter.getSelectedItems().size() - 1; i >= 0; i-- ) {
+            adapter.remove(adapter.getSelectedItems().get(i));
+        }
+
+    }
+
     private ActionMode.Callback actionModeCallback = new ActionMode.Callback() {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -198,6 +206,7 @@ public class ItemsFragment extends Fragment {
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.remove:
+                    removeSelectedItems();
                     break;
             }
             return false;
