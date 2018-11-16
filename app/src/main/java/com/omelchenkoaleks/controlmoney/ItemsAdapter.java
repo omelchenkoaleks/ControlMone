@@ -57,10 +57,12 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         notifyDataSetChanged();
     }
 
+    // Сколько выделено элементов.
     int getSelectedItemCount() {
         return selections.size();
     }
 
+    // Собираем массив выделенных позиций.
     List<Integer> getSelectedItems() {
         List<Integer> items = new ArrayList<>(selections.size());
         for (int i = 0; i < selections.size(); i++) {
@@ -69,6 +71,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         return items;
     }
 
+    // Удаляем элементы нашего списка.
     Item remove(int pos) {
         final Item item = data.remove(pos);
         notifyItemRemoved(pos);
