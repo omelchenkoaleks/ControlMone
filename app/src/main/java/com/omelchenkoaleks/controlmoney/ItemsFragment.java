@@ -223,24 +223,8 @@ public class ItemsFragment extends Fragment {
     };
 
     private void showDialog() {
-        AlertDialog alertDialog = new AlertDialog.Builder(getContext())
-                .setTitle(R.string.delete_item_dialog)
-                .setMessage(R.string.are_you_sure)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .create();
-
-        alertDialog.show();
+        ConfirmationDialog confirmationDialog = new ConfirmationDialog();
+        confirmationDialog.show(getFragmentManager(), "ConfirmationDialog");
     }
 }
 
