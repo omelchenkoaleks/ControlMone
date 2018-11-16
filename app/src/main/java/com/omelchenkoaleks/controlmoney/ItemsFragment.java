@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
@@ -207,7 +208,7 @@ public class ItemsFragment extends Fragment {
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.remove:
-                    removeSelectedItems();
+                    showDialog();
                     break;
             }
             return false;
@@ -219,5 +220,14 @@ public class ItemsFragment extends Fragment {
             actionMode = null;
         }
     };
+
+    private void showDialog() {
+        AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                .setTitle("Удаление")
+                .setMessage("Вы уверены?")
+                .create();
+
+        alertDialog.show();
+    }
 }
 
