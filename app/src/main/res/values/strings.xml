@@ -11,6 +11,12 @@
     <!---->
     <string name="currency_ua">₴</string>
 
+    <!--AlertDialog-->
+    <string name="delete_item_dialog">Удаление</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="are_you_sure">Вы уверены?</string>
+
     <!--menu-->
     <string name="menu_item_remove">Удалить</string>
 

@@ -1,6 +1,7 @@
 package com.omelchenkoaleks.controlmoney;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -223,8 +224,20 @@ public class ItemsFragment extends Fragment {
 
     private void showDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(getContext())
-                .setTitle("Удаление")
-                .setMessage("Вы уверены?")
+                .setTitle(R.string.delete_item_dialog)
+                .setMessage(R.string.are_you_sure)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
                 .create();
 
         alertDialog.show();
