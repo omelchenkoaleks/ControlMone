@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/item_bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
@@ -14,7 +15,6 @@
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorItem"
         android:layout_weight="1"
         android:padding="16dp"
         android:textColor="@color/white"
@@ -24,7 +24,6 @@
         android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@color/colorItemDark"
         android:padding="16dp"
         android:gravity="right"
         android:textColor="@color/white"

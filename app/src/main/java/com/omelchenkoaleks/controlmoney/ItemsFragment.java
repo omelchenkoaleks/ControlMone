@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -39,7 +40,7 @@ public class ItemsFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ItemsAdapter adapter;
-    //    private FloatingActionButton fab;
+//    private FloatingActionButton fab;
     private SwipeRefreshLayout refresh;
 
     private Api api;
@@ -157,6 +158,11 @@ public class ItemsFragment extends Fragment {
             if (isInActionMode()) {
                 return;
             }
+
+            // TODO: Почему методы отличаются?
+//            actionMode = ((AppCompatActivity) getActivity())
+//                    .startSupportActionMode(actionModeCallback);
+//            toggleSelection(position);
         }
 
         // Проверяем, что не пустой.
@@ -166,12 +172,12 @@ public class ItemsFragment extends Fragment {
 
         // Переключаем, что у нас item выбран.
         private void toggleSelection(int position) {
-//            adapter.toggleSelection(position);
+            adapter.toggleSelection(position);
         }
     }
 
 
-    /*     ACTION MODE     */
+    /*     ACTION MODE  заменяет то, что есть в Toolbar на другой режим.   */
 
     private ActionMode actionMode = null;
 
@@ -184,17 +190,21 @@ public class ItemsFragment extends Fragment {
         }
 
         @Override
-        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
             return false;
         }
 
         @Override
-        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.remove:
+                    break;
+            }
             return false;
         }
 
         @Override
-        public void onDestroyActionMode(ActionMode actionMode) {
+        public void onDestroyActionMode(ActionMode mode) {
             actionMode = null;
         }
     };

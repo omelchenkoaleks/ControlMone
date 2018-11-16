@@ -2,6 +2,7 @@ package com.omelchenkoaleks.controlmoney;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,18 +34,37 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         notifyItemInserted(0);
     }
 
+    // Может хранить состояния нажатых объектов - true !true...
+    // Нам для каждой позиции нужно записывать выделена она
+    // или не выделена - тут и есть помощь.
+    // Заметка: можно было бы использовать HashMap<> = но это очень затратно по памяти...
+    private SparseBooleanArray selections = new SparseBooleanArray();
+
+    // Метод нужен, чтобы передавать позицию item.
+    public void toggleSelection(int position) {
+        // Если по нашей позиции уже есть выделенный элемент, то надо снять выделение.
+        if (selections.get(position, false)) {
+            selections.delete(position);
+        } else {
+            selections.put(position, true);
+        }
+        // Нужно адаптеру сказать, что что-то поменялось:
+        notifyItemChanged(position);
+    }
+
     @NonNull
     @Override
-    public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
+    public ItemsAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item, parent, false);
         return new ItemViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ItemsAdapter.ItemViewHolder holder, int position) {
         Item record = data.get(position);
-        holder.bind(record, position, listener);
+        holder.bind(record, position, listener,
+                selections.get(position, false));
     }
 
     @Override
@@ -55,7 +75,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
     // Среди прочего здесь есть доступ к нашим отдельным элементам -
     // это полезно при обработке нажатий на эти элементы.
     // Этот доступ производится через itemView.
-    protected static class ItemViewHolder extends RecyclerView.ViewHolder {
+    static class ItemViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView title;
         private final TextView price;
@@ -66,7 +86,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
             price = itemView.findViewById(R.id.price);
         }
 
-        public void bind(final Item item, final int position, final ItemsAdapterListener listener) {
+        public void bind(final Item item,
+                         final int position,
+                         final ItemsAdapterListener listener,
+                         boolean selected) {
             title.setText(item.name);
             price.setText(item.price);
 
@@ -90,6 +113,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
                     return true;
                 }
             });
+
+            itemView.setActivated(selected);
         }
     }
 }
