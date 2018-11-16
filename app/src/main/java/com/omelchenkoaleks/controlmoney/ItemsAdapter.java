@@ -52,6 +52,29 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         notifyItemChanged(position);
     }
 
+    void clearSelections() {
+        selections.clear();
+        notifyDataSetChanged();
+    }
+
+    int getSelectedItemCount() {
+        return selections.size();
+    }
+
+    List<Integer> getSelectedItems() {
+        List<Integer> items = new ArrayList<>(selections.size());
+        for (int i = 0; i < selections.size(); i++) {
+            items.add(selections.keyAt(i));
+        }
+        return items;
+    }
+
+    Item remove(int pos) {
+        final Item item = data.remove(pos);
+        notifyItemRemoved(pos);
+        return item;
+    }
+
     @NonNull
     @Override
     public ItemsAdapter.ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int position) {

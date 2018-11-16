@@ -205,6 +205,7 @@ public class ItemsFragment extends Fragment {
 
         @Override
         public void onDestroyActionMode(ActionMode mode) {
+            adapter.clearSelections();
             actionMode = null;
         }
     };
