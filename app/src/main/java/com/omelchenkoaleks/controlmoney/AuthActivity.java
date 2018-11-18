@@ -114,8 +114,8 @@ public class AuthActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<AuthResult> call, Response<AuthResult> response) {
                 AuthResult result = response.body();
-                Log.i(TAG, "onResponse: token = " + result.token);
-//                finish();
+                ((App) getApplication()).saveAuthToken(result.token);
+                finish();
             }
 
             // Если все пошло плохо...

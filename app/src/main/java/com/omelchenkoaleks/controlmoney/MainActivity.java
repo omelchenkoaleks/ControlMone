@@ -36,9 +36,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
 
-        MainPagesAdapter pagesAdapter =
-                new MainPagesAdapter(getSupportFragmentManager(), this);
-        viewPager.setAdapter(pagesAdapter);
         viewPager.addOnPageChangeListener(this);
 
         tabLayout.setupWithViewPager(viewPager);
@@ -70,9 +67,20 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     protected void onResume() {
         super.onResume();
 
-        Intent intent = new Intent(this, AuthActivity.class);
-        startActivity(intent);
+        // T.e. если у нас в хранилище хранится token - значит мы авторизованы и ...
+        // А если нет, то мы переходим на экран авторизации...
+        if (((App) getApplication()).isAuthorized()) {
+            initTabs();
+        } else {
+            Intent intent = new Intent(this, AuthActivity.class);
+            startActivity(intent);
+        }
     }
+
+    private void initTabs() {
+            MainPagesAdapter adapter = new MainPagesAdapter(getSupportFragmentManager(), this);
+            viewPager.setAdapter(adapter);
+        }
 
     @Override
     public void onPageScrolled(int i, float v, int i1) {
