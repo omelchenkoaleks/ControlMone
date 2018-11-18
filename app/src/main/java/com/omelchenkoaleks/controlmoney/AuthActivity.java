@@ -51,6 +51,12 @@ public class AuthActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         // TODO: добавить проверку залогированного пользователя.
+
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
+        if (account != null) {
+            updateUI(account);
+        }
     }
 
     private void signIn() {
@@ -89,9 +95,14 @@ public class AuthActivity extends AppCompatActivity {
     private void updateUI(GoogleSignInAccount account) {
         if (account == null) {
             showError();
+            return;
         } else {
             showSuccess();
         }
+
+        // хотим получить id пользователя - будем использовать для авторизации на сервере
+        String id = account.getId();
+        Log.i(TAG, "id: " + id);
     }
 
     private void showSuccess() {
