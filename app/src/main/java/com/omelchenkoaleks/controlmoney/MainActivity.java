@@ -67,6 +67,14 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        Intent intent = new Intent(this, AuthActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
     public void onPageScrolled(int i, float v, int i1) {
 
     }
