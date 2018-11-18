@@ -69,6 +69,7 @@ public class App extends Application {
 
     // Вспомогательный метод авторизовано - или - нет.
     public boolean isAuthorized() {
-        return TextUtils.isEmpty(getAuthToken());
+        // Возвращаем - если не пустая.
+        return !TextUtils.isEmpty(getAuthToken());
     }
 }
