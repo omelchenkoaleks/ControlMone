@@ -1,5 +1,6 @@
 package com.omelchenkoaleks.controlmoney;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 public class AuthActivity extends AppCompatActivity {
 
     private static final String TAG = "AuthActivity";
+
+    private static final int RC_SIGN_IN = 321;
 
     // получаем клиент
     private GoogleSignInClient googleSignInClient;
@@ -47,5 +50,8 @@ public class AuthActivity extends AppCompatActivity {
 
     private void signIn() {
         Log.i(TAG, "signIn: ");
+
+        Intent signInIntent = googleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 }
