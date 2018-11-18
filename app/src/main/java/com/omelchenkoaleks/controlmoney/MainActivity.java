@@ -14,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import com.omelchenkoaleks.controlmoney.Api.Item;
+
 public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
     private static final String TAG = "MainActivity";

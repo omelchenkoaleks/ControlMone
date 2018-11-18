@@ -5,8 +5,15 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.omelchenkoaleks.controlmoney.Api.Api;
 
+import java.io.IOException;
+
+import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -34,6 +41,7 @@ public class App extends Application {
 
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
+                .addInterceptor(new AuthInterceptor())
                 .build();
 
         Gson gson = new GsonBuilder()
@@ -71,5 +79,24 @@ public class App extends Application {
     public boolean isAuthorized() {
         // Возвращаем - если не пустая.
         return !TextUtils.isEmpty(getAuthToken());
+    }
+
+    // Перехватываем наши запросы - видоизменяем их и добавляем к ним ссылки.
+    private class AuthInterceptor implements Interceptor {
+
+        // Перед тем, как отправить мы можем что-то с запросом сделать...
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request request = chain.request();
+            HttpUrl url = request.url();
+
+            HttpUrl.Builder urlBuilder = url.newBuilder();
+            HttpUrl newUrl = urlBuilder.addQueryParameter("auth-token", getAuthToken()).build();
+
+            Request.Builder requestBuilder = request.newBuilder();
+            Request newRequest = requestBuilder.url(newUrl).build();
+
+            return chain.proceed(newRequest);
+        }
     }
 }

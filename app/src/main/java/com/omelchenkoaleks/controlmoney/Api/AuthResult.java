@@ -1,4 +1,4 @@
-package com.omelchenkoaleks.controlmoney;
+package com.omelchenkoaleks.controlmoney.Api;
 
 import com.google.gson.annotations.SerializedName;
 

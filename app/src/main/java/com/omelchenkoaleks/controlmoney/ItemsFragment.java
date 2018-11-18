@@ -1,27 +1,27 @@
 package com.omelchenkoaleks.controlmoney;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.omelchenkoaleks.controlmoney.Api.AddItemResult;
+import com.omelchenkoaleks.controlmoney.Api.Api;
+import com.omelchenkoaleks.controlmoney.Api.Item;
 
 import java.util.List;
 
@@ -130,11 +130,32 @@ public class ItemsFragment extends Fragment {
 
             // Когда получили item по типу проверяем - наш ли это item.
             if (item.type.equals(type)) {
-                adapter.addItem(item);
+                addItem(item);
             }
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void addItem(final Item item) {
+        Call<AddItemResult> call = api.addItem(item.price, item.name, item.type);
+
+        call.enqueue(new Callback<AddItemResult>() {
+
+            @Override
+            public void onResponse(Call<AddItemResult> call, Response<AddItemResult> response) {
+                AddItemResult result = response.body();
+                if (result.status.equals("success")) {
+                    item.id = result.id;
+                    adapter.addItem(item);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddItemResult> call, Throwable t) {
+
+            }
+        });
     }
 
     // Так как это вложенный класс - он наследует все поля и методы внешнего класса.

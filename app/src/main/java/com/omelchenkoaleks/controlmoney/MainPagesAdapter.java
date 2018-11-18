@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
+import com.omelchenkoaleks.controlmoney.Api.Item;
+
 public class MainPagesAdapter extends FragmentPagerAdapter {
 
     private static final String TAG = "MainPagesAdapter";

@@ -1,9 +1,7 @@
-package com.omelchenkoaleks.controlmoney;
+package com.omelchenkoaleks.controlmoney.Api;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.io.Serializable;
 
 public class Item implements Parcelable {
 

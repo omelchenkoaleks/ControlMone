@@ -1,9 +1,10 @@
-package com.omelchenkoaleks.controlmoney;
+package com.omelchenkoaleks.controlmoney.Api;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface Api {
@@ -13,4 +14,9 @@ public interface Api {
 
     @GET("items")
     Call<List<Item>> getItems(@Query("type") String type);
+
+    @POST("items/add")
+    Call<AddItemResult> addItem(@Query("price") String price,
+                                @Query("name") String name,
+                                @Query("type") String type);
 }
