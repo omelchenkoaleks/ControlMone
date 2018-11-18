@@ -16,11 +16,17 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class AuthActivity extends AppCompatActivity {
 
     private static final String TAG = "AuthActivity";
 
     private static final int RC_SIGN_IN = 321;
+
+    private Api api;
 
     // получаем клиент
     private GoogleSignInClient googleSignInClient;
@@ -29,6 +35,8 @@ public class AuthActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
+
+        api = ((App) getApplication()).getApi();
 
         GoogleSignInOptions gso = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -94,22 +102,35 @@ public class AuthActivity extends AppCompatActivity {
     // Метод вызывается, когда мы получили аккаунт.
     private void updateUI(GoogleSignInAccount account) {
         if (account == null) {
-            showError();
+            showError("Account is null");
             return;
-        } else {
-            showSuccess();
         }
 
         // хотим получить id пользователя - будем использовать для авторизации на сервере
         String id = account.getId();
-        Log.i(TAG, "id: " + id);
+
+        // Если все хорошо у нас...
+        api.auth(id).enqueue(new Callback<AuthResult>() {
+            @Override
+            public void onResponse(Call<AuthResult> call, Response<AuthResult> response) {
+                AuthResult result = response.body();
+                Log.i(TAG, "onResponse: token = " + result.token);
+//                finish();
+            }
+
+            // Если все пошло плохо...
+            @Override
+            public void onFailure(Call<AuthResult> call, Throwable t) {
+                showError("Auth failed " + t.getMessage());
+            }
+        });
     }
 
     private void showSuccess() {
         Toast.makeText(this, "Account successfully obtained", Toast.LENGTH_SHORT).show();
     }
 
-    private void showError() {
-        Toast.makeText(this, "Account is null", Toast.LENGTH_SHORT).show();
+    private void showError(String error) {
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
 }
